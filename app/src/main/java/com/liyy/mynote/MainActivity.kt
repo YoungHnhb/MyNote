@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     private fun refreshData() {
         var bmobQuery: BmobQuery<NoteEntity> = BmobQuery<NoteEntity>()
         bmobQuery.setLimit(500)
+        bmobQuery.order("-noteTimestamp")
         bmobQuery.findObjects(object : FindListener<NoteEntity>() {
             override fun done(result: MutableList<NoteEntity>?, exception: BmobException?) {
                 if (exception == null) {
