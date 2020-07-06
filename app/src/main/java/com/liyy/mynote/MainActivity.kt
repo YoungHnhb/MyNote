@@ -7,12 +7,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +24,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        setModeNight()
+        checkUpdate()
         initView()
     }
 
@@ -41,7 +45,15 @@ class MainActivity : AppCompatActivity() {
 
             }, 3000)
         }
+    }
 
+    private fun setModeNight() {
+        val c: Calendar = Calendar.getInstance()
+        c.timeInMillis = System.currentTimeMillis()
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        if (20 <= hour || hour <= 5) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
     }
 
     override fun onResume() {
@@ -79,5 +91,9 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_add -> startActivity(Intent(this@MainActivity, AddNoteActivity::class.java))
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkUpdate() {
+
     }
 }

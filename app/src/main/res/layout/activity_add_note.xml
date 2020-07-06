@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="16dp"
@@ -15,7 +14,7 @@
         android:layout_height="30dp"
         android:gravity="center"
         android:text="xxxx-xx-xx"
-        android:textColor="@android:color/black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="20sp" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -24,27 +23,30 @@
         android:layout_height="30dp"
         android:gravity="center"
         android:text="xx:xx:xx"
-        android:textColor="@android:color/black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="20sp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/title_list_popup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Action" />
+        android:text="Select Action"
+        android:textColor="?android:attr/textColorPrimary" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/note_value_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="value,如：70ml (可为空)" />
+        android:hint="value,如：70ml (可为空)"
+        android:textColor="?android:attr/editTextColor" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/confirm_bt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Confirm" />
+        android:text="Confirm"
+        android:textColor="?android:attr/textColorPrimary" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_bt"
@@ -53,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="Delete"
+        android:textColor="?android:attr/textColorPrimary"
         android:visibility="gone" />
 
 </LinearLayout>
