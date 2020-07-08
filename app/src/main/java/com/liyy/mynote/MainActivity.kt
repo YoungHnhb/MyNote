@@ -2,7 +2,6 @@ package com.liyy.mynote
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -10,23 +9,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mAdapter: NoteAdapter
+    private var mPageLimit = 50
+    private var mPage = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setModeNight()
-        checkUpdate()
         initView()
+        checkUpdate(this)
     }
 
     private fun initView() {
@@ -40,11 +41,17 @@ class MainActivity : AppCompatActivity() {
             ContextCompat.getColor(this, android.R.color.holo_red_light),
             ContextCompat.getColor(this, android.R.color.holo_green_light))
         swipe_refresh_layout.setOnRefreshListener {
-            Handler().postDelayed({
-                refreshData()
-
-            }, 3000)
+            refreshData(false)
         }
+        data_list_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && !recyclerView.canScrollVertically(1)) {
+                    refreshData(true)
+                }
+            }
+        })
     }
 
     private fun setModeNight() {
@@ -59,20 +66,31 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         swipe_refresh_layout.isRefreshing = true
-        refreshData()
+        refreshData(false)
     }
 
-    private fun refreshData() {
+    private fun refreshData(isLoadMore: Boolean) {
         var bmobQuery: BmobQuery<NoteEntity> = BmobQuery<NoteEntity>()
-        bmobQuery.setLimit(500)
+        bmobQuery.setLimit(mPageLimit)
         bmobQuery.order("-noteTimestamp")
+        if (isLoadMore) {
+            bmobQuery.setSkip(mPage * mPageLimit)
+        } else {
+            bmobQuery.setSkip(0)
+        }
         bmobQuery.findObjects(object : FindListener<NoteEntity>() {
             override fun done(result: MutableList<NoteEntity>?, exception: BmobException?) {
                 if (exception == null) {
                     if (result == null) {
                         return
                     }
-                    mAdapter.setDataList(result as ArrayList<NoteEntity>)
+                    if (isLoadMore) {
+                        mAdapter.addDataList(result as ArrayList<NoteEntity>)
+                        mPage++
+                    } else {
+                        mAdapter.setDataList(result as ArrayList<NoteEntity>)
+                        mPage = 1
+                    }
                 } else {
                     Toast.makeText(this@MainActivity, exception.message, Toast.LENGTH_SHORT).show()
                 }
@@ -93,7 +111,4 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun checkUpdate() {
-
-    }
 }

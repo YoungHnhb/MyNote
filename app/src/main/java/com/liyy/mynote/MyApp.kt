@@ -1,6 +1,7 @@
 package com.liyy.mynote
 
 import android.app.Application
+import android.content.Context
 import cn.bmob.v3.Bmob
 
 /**
@@ -11,11 +12,18 @@ import cn.bmob.v3.Bmob
  */
 class MyApp : Application() {
 
+
+
     override fun onCreate() {
         super.onCreate()
 
         // init Bmob
         Bmob.initialize(this, "fd256321add2a9423c193ef1299bbbbb")
+        mApp = applicationContext
+    }
+
+    companion object {
+        lateinit var mApp: Context
     }
 
 }

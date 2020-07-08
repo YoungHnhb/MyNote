@@ -31,6 +31,11 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteHolder>(), View.OnClick
         notifyDataSetChanged()
     }
 
+    fun addDataList(data: ArrayList<NoteEntity>) {
+        dataList.addAll(data)
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {
         val noteEntity = dataList[position]
         holder.timeTv.text = noteEntity.noteTime

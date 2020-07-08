@@ -237,6 +237,8 @@ class AddNoteActivity : AppCompatActivity() {
         titleDataList.add("奶粉")
         titleDataList.add("吸奶")
         titleDataList.add("大便")
+        titleDataList.add("体重")
+        titleDataList.add("其他")
 
         title_list_popup.setOnClickListener {
             with(titleListPopupWindow) {
