@@ -23,10 +23,9 @@ import java.io.File
  */
 
 fun checkUpdate(activity: Activity) {
-    val lastUpdate = SPUtils.getInstance().getLong(SP_UPDATE_TAG, 1593607496000L)
+    val lastUpdate = SPUtils.getInstance().getLong(SP_UPDATE_TAG, System.currentTimeMillis())
     val deltaTime = (System.currentTimeMillis() - lastUpdate) / (1000 * 60 * 60 * 24)
     if (deltaTime > 5) {
-        SPUtils.getInstance().put(SP_UPDATE_TAG, System.currentTimeMillis())
         checkUpdateNetwork()
     }
     if (needUpdate().not()) {
@@ -35,18 +34,24 @@ fun checkUpdate(activity: Activity) {
     checkPermission(activity)
     MaterialAlertDialogBuilder(activity)
         .setTitle("检测到新版本是否更新?")
-        .setPositiveButton("立即下载", object : DialogInterface.OnClickListener {
+        .setPositiveButton("立即下载") { _, _ -> showUpdateProgressDialog(activity) }
+        .setNegativeButton("暂不更新", null)
+        .show()
+
+    /*
+    上面lambda补全代码
+    .setPositiveButton("立即下载", object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 showUpdateProgressDialog(activity)
             }
 
         })
-        .setNegativeButton("暂不更新", null)
-        .show()
+     */
 }
 
 fun checkUpdateNetwork() {
     NetworkManager.get().checkUpdate { updateEntity ->
+        SPUtils.getInstance().put(SP_UPDATE_TAG, System.currentTimeMillis())
         SPUtils.getInstance().put(SP_LAST_UPDATE_CODE, updateEntity.versionCode)
         SPUtils.getInstance().put(SP_LAST_UPDATE_URL, updateEntity.url)
     }
