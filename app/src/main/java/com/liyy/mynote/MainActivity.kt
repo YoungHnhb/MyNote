@@ -2,8 +2,6 @@ package com.liyy.mynote
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -42,6 +40,9 @@ class MainActivity : AppCompatActivity() {
             ContextCompat.getColor(this, android.R.color.holo_green_light))
         swipe_refresh_layout.setOnRefreshListener {
             refreshData(false)
+        }
+        swipe_refresh_layout.setOnOverScrollTopListener {
+            startActivity(Intent(this@MainActivity, AddNoteActivity::class.java))
         }
         data_list_rv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
@@ -97,18 +98,6 @@ class MainActivity : AppCompatActivity() {
                 swipe_refresh_layout.isRefreshing = false
             }
         })
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_action_bar, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_add -> startActivity(Intent(this@MainActivity, AddNoteActivity::class.java))
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 }

@@ -6,11 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--    <com.liyy.mynote.NestedLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.liyy.mynote.widget.MySwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,7 +20,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <!--    </com.liyy.mynote.NestedLayout>-->
+    </com.liyy.mynote.widget.MySwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
