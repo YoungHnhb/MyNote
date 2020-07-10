@@ -23,9 +23,10 @@ import java.io.File
  */
 
 fun checkUpdate(activity: Activity) {
-    val lastUpdate = SPUtils.getInstance().getLong(SP_UPDATE_TAG, System.currentTimeMillis())
-    val deltaTime = (System.currentTimeMillis() - lastUpdate) / (1000 * 60 * 60 * 24)
-    if (deltaTime > 5) {
+    val oneDayTimeMillis = 24 * 60 * 60 * 1000
+    val lastUpdate = SPUtils.getInstance().getLong(SP_UPDATE_TAG, System.currentTimeMillis() - 2 * oneDayTimeMillis)
+    val deltaTime = (System.currentTimeMillis() - lastUpdate) / oneDayTimeMillis
+    if (deltaTime > 1) {
         checkUpdateNetwork()
     }
     if (needUpdate().not()) {
