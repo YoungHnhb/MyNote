@@ -50,12 +50,13 @@ public class NetworkManager {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String resultStr = response.body().string();
-                Log.e("NetworkManager", "success:" + resultStr);
-                UpdateEntity updateEntity = new Gson().fromJson(resultStr, UpdateEntity.class);
-                if (BuildConfig.VERSION_CODE < updateEntity.getVersionCode()) {
-                    callback.needUpdate(updateEntity);
+                Log.e("NetworkManager", "success:" + resultStr + "--" + response.code());
+                if (response.code() == 200) {
+                    UpdateEntity updateEntity = new Gson().fromJson(resultStr, UpdateEntity.class);
+                    if (BuildConfig.VERSION_CODE <= updateEntity.getVersionCode()) {
+                        callback.needUpdate(updateEntity);
+                    }
                 }
-
             }
         });
     }
