@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setModeNight()
         initView()
-        checkUpdate(this)
+//        checkUpdate(this)
     }
 
     private fun initView() {
