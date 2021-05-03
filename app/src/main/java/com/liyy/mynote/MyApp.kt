@@ -18,6 +18,7 @@ class MyApp : Application() {
         super.onCreate()
 
         // init Bmob
+        Bmob.resetDomain("https://open3.bmob.cn/8/");
         Bmob.initialize(this, "fd256321add2a9423c193ef1299bbbbb")
         mApp = applicationContext
     }
