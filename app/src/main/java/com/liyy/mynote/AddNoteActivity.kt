@@ -17,6 +17,7 @@ import cn.bmob.v3.listener.QueryListener
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.liyy.mynote.data.NoteEntity
 import kotlinx.android.synthetic.main.activity_add_note.*
 import java.text.ParsePosition
 import java.text.SimpleDateFormat

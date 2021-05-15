@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
+import com.liyy.mynote.data.NoteEntity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -25,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setModeNight()
         initView()
-//        checkUpdate(this)
     }
 
     private fun initView() {
